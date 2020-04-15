@@ -3,20 +3,30 @@ def main():
 
 def getLetter(line):
     letter = line[line.find(",")+1:line.find("=")]
-    print (letter)
+    return letter
 
 def getStates(line):
     state = line.split(',')[0]
-    print(state)
+    state.strip()
+    return state
 
 def getElements(line):
     splitWith = ">"
     res = line.partition(splitWith)[2] 
-    print(res)
+    return res
+
+def createDictionary(initialNode, finalNode, nombreNodo, letters, elements):
+    nombreNodo =	{
+    "initialNode": initialNode,
+    "finalNode": finalNode,
+    "nombreNodo": nombreNodo,
+    letters: elements
+    }
+    print(nombreNodo)
 
 def extractDataFile():
 
-    file = "files/test2.txt"
+    file = "files/test1.txt"
     with open(file) as f:
         line = f.readline()
         lineNumber = 0
@@ -26,27 +36,24 @@ def extractDataFile():
             line = f.readline()
             lineNumber += 1
             if (lineNumber == 0):
-                print("Nodos")
-                print(line)
+                pass
             if (lineNumber == 1):
-                print("lenguaje")
-                print(line)
+                pass
             if (lineNumber == 2):
                 initialNode = line
-                print("Nodo inicial")
-                print (initialNode)
+                groupInitNodes = initialNode.split(',')
             if (lineNumber == 3):
                 finalNode = line
-                print("Nodo final")
-                print (finalNode)
+                groupFinalNodes = finalNode.split(',')
             if (lineNumber > 3):
-                print("Nodo padre")
-                getStates(line)
-                print("letra que el pertenece")
-                getLetter(line)
-                print("Elementos que le pertencen")
-                getElements(line)
-
+                if (getStates(line).rstrip('\n') in finalNode.rstrip('\n') and getStates(line).rstrip('\n') in initialNode.rstrip('\n')):
+                   createDictionary(True, True, getStates(line), getLetter(line), getElements(line)) 
+                elif (getStates(line).rstrip('\n') not in initialNode.rstrip('\n') and getStates(line).rstrip('\n') in finalNode.rstrip('\n')):
+                    createDictionary(False, True, getStates(line), getLetter(line), getElements(line))
+                elif (getStates(line).rstrip('\n') in initialNode.rstrip('\n') and getStates(line).rstrip('\n') not in finalNode.rstrip('\n')):
+                    createDictionary(True, False, getStates(line), getLetter(line), getElements(line).rstrip('\n'))
+                else:
+                    createDictionary(False, False, getStates(line), getLetter(line), getElements(line).rstrip('\n'))
         f.close()
 
 if __name__ == "__main__":
