@@ -17,13 +17,14 @@ def createDictionary(initialNode, finalNode, nombreNodo, letters, elements):
     "initialNode": initialNode,
     "finalNode": finalNode,
     "nombreNodo": nombreNodo,
-    letters: elements
+    "letter": letters,
+    "elements": elements
     }
     return node
 
 def extractDataFile():
 
-    file = "files/test1.txt"
+    file = "files/test2.txt"
     with open(file) as f:
         line = f.readline()
         lineNumber = 0
@@ -44,6 +45,8 @@ def extractDataFile():
                 finalNode = line
                 groupFinalNodes = finalNode.split(',')
             if (lineNumber > 3):
+                if(getStates(line).rstrip("\n") == ""):
+                    continue
                 if (getStates(line).rstrip('\n') in finalNode.rstrip('\n') and getStates(line).rstrip('\n') in initialNode.rstrip('\n')):
                    listNodes.append(createDictionary(True, True, getStates(line), getLetter(line), getElements(line)))
                 elif (getStates(line).rstrip('\n') not in initialNode.rstrip('\n') and getStates(line).rstrip('\n') in finalNode.rstrip('\n')):
