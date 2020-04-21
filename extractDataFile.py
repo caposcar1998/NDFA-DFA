@@ -34,9 +34,10 @@ def extractDataFile():
         while line:
             line = f.readline()
             lineNumber += 1
-            if (lineNumber == 0):
-                pass
+            if (lineNumber < 1):
+                print(line)
             if (lineNumber == 1):
+                #Imprime el afabeto
                 pass
             if (lineNumber == 2):
                 initialNode = line
@@ -48,13 +49,13 @@ def extractDataFile():
                 if(getStates(line).rstrip("\n") == ""):
                     continue
                 if (getStates(line).rstrip('\n') in finalNode.rstrip('\n') and getStates(line).rstrip('\n') in initialNode.rstrip('\n')):
-                   listNodes.append(createDictionary(True, True, getStates(line), getLetter(line), getElements(line)))
+                   listNodes.append(createDictionary(True, True, getStates(line), getLetter(line), getElements(line).split(',')))
                 elif (getStates(line).rstrip('\n') not in initialNode.rstrip('\n') and getStates(line).rstrip('\n') in finalNode.rstrip('\n')):
-                    listNodes.append(createDictionary(False, True, getStates(line), getLetter(line), getElements(line)))
+                    listNodes.append(createDictionary(False, True, getStates(line), getLetter(line), getElements(line).split(',')))
                 elif (getStates(line).rstrip('\n') in initialNode.rstrip('\n') and getStates(line).rstrip('\n') not in finalNode.rstrip('\n')):
-                    listNodes.append(createDictionary(True, False, getStates(line), getLetter(line), getElements(line).rstrip('\n')))
+                    listNodes.append(createDictionary(True, False, getStates(line), getLetter(line), getElements(line).rstrip('\n').split(',')))
                 else:
-                    listNodes.append(createDictionary(False, False, getStates(line), getLetter(line), getElements(line).rstrip('\n')))
+                    listNodes.append(createDictionary(False, False, getStates(line), getLetter(line), getElements(line).rstrip('\n').split(',')))
         f.close()
         print(listNodes)
 
