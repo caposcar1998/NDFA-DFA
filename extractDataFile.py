@@ -49,7 +49,7 @@ def extractDataFile():
                 if(getStates(line).rstrip("\n") == ""):
                     continue
                 if (getStates(line).rstrip('\n') in finalNode.rstrip('\n') and getStates(line).rstrip('\n') in initialNode.rstrip('\n')):
-                   listNodes.append(createDictionary(True, True, getStates(line), getLetter(line), getElements(line).split(',')))
+                   listNodes.append(createDictionary(True, True, getStates(line), getLetter(line), getElements(line).rstrip('\n').split(',')))
                 elif (getStates(line).rstrip('\n') not in initialNode.rstrip('\n') and getStates(line).rstrip('\n') in finalNode.rstrip('\n')):
                     listNodes.append(createDictionary(False, True, getStates(line), getLetter(line), getElements(line).split(',')))
                 elif (getStates(line).rstrip('\n') in initialNode.rstrip('\n') and getStates(line).rstrip('\n') not in finalNode.rstrip('\n')):
