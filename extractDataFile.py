@@ -24,7 +24,7 @@ def createDictionary(initialNode, finalNode, nombreNodo, letters, elements):
 
 def extractDataFile():
 
-    file = "files/test2.txt"
+    file = "files/test3.txt"
     with open(file) as f:
         line = f.readline()
         lineNumber = 0
@@ -54,8 +54,8 @@ def extractDataFile():
                     listNodes.append(createDictionary(False, True, getStates(line), getLetter(line), getElements(line).split(',')))
                 elif (getStates(line).rstrip('\n') in initialNode.rstrip('\n') and getStates(line).rstrip('\n') not in finalNode.rstrip('\n')):
                     listNodes.append(createDictionary(True, False, getStates(line), getLetter(line), getElements(line).rstrip('\n').split(',')))
-                else:
+                elif (getStates(line).rstrip('\n') not in initialNode.rstrip('\n') and getStates(line).rstrip('\n') not in finalNode.rstrip('\n')):
                     listNodes.append(createDictionary(False, False, getStates(line), getLetter(line), getElements(line).rstrip('\n').split(',')))
         f.close()
-        print(listNodes)
+
 
