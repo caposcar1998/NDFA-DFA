@@ -16,15 +16,28 @@ def getFinalNodes(listNodes):
     return finalNodes
 
 
-def getNodesToLambda(firstNodes, listNodes):
-    for lambdaNode in firstNodes:
-        if(lambdaNode["letter"] == "l"):
-            for letterNode in lambdaNode["elements"]:
-                for nodeFound in listNodes:
-                    if(nodeFound["nombreNodo"] == letterNode):
-                        if(nodeFound["letter"] == "l"):
-                            print(nodeFound["elements"] , " ", lambdaNode["nombreNodo"])
-    
+def getNodesToLambdaWithA(firstNodes, listNodes):
+
+    for node in listNodes:
+        if (node['letter'] == "l" ):
+            listaCrear = [] 
+            print(node)
+            getNext( node,"b",listNodes, listaCrear)
+            print(listaCrear)
+            print("cambio")
+
+
+
+
+def getNext(node, letter, listNodes, listaCrear):
+    if("L" in node['elements']     ) :
+        listaCrear.append(node)
+        return 
+    else:
+        for node in listNodes:
+            if (node['letter'] == "l"):
+                newNode = node
+    return getNext(newNode, letter, listNodes, listaCrear)
 
 def  lambdaNdfaToNdfa():
     language = ["a","b","l"]
@@ -33,4 +46,5 @@ def  lambdaNdfaToNdfa():
     finalNodes =  getFinalNodes(listNodes)
     dnfaList = []
     dnfaList.append(firstNodes)
-    getNodesToLambda(firstNodes, listNodes)
+    getNodesToLambdaWithA(firstNodes, listNodes)
+   
