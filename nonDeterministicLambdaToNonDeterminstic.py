@@ -58,10 +58,11 @@ def getLambdasLettersNodes(node, listNodes, letter):
         if (node["elements"][0] == checkNode["nombreNodo"] and checkNode["letter"] == letter):
             print("final",checkNode)
         if (node["elements"][0] == checkNode["nombreNodo"] and checkNode["letter"] == "l"):
-            getLambdasLettersNodes(checkNode,listNodes,letter)
+            getLambdasLettersNodes(checkNode, listNodes, letter)
 
 def getLettersNodes(lambdaNodes, listNodes,letter,secondRow):
     for lambdaNode in lambdaNodes:
+        print("nodo")
         for checkNode in lambdaNode:
             print("checa", checkNode)
             for listNode in listNodes:
@@ -69,20 +70,20 @@ def getLettersNodes(lambdaNodes, listNodes,letter,secondRow):
                     print("final",listNode)
                 if(checkNode["nombreNodo"] == listNode["nombreNodo"] and listNode["letter"] == "l" ):
                     print("buscar",listNode)
-                    getLambdasLettersNodes(listNode, listNodes, letter)
-                    
+                    getLambdasLettersNodes(listNode, listNodes,letter)
+
         print()
 
 def  lambdaNdfaToNdfa():
     language = ["a","b","l"]
-    listNodes= [{'initialNode': True, 'finalNode': False, 'nombreNodo': 'q0', 'letter': 'a', 'elements': ['q0']}, {'initialNode': False, 'finalNode': False, 'nombreNodo': 'q1', 'letter': 'a', 'elements': ['L']}, {'initialNode': False, 'finalNode': False, 'nombreNodo': 'q2', 'letter': 'a', 'elements': ['q1']}, {'initialNode': False, 'finalNode': True, 'nombreNodo': 'q3', 'letter': 'a', 'elements': ['L']}, {'initialNode': True, 'finalNode': False, 'nombreNodo': 'q0', 'letter': 'b', 'elements': ['L']}, {'initialNode': False, 'finalNode': False, 'nombreNodo': 'q1', 'letter': 'b', 'elements': ['q2']}, {'initialNode': False, 'finalNode': False, 'nombreNodo': 'q2', 'letter': 'b', 'elements': ['L']}, {'initialNode': False, 'finalNode': True, 'nombreNodo': 'q3', 'letter': 'b', 'elements': ['L']}, {'initialNode': True, 'finalNode': False, 'nombreNodo': 'q0', 'letter': 'l', 'elements': ['q1']}, {'initialNode': False, 'finalNode': False, 'nombreNodo': 'q1', 'letter': 'l', 'elements': ['q3']}, {'initialNode': False, 'finalNode': False, 'nombreNodo': 'q2', 'letter': 'l', 'elements': ['L']}, {'initialNode': False, 'finalNode': True, 'nombreNodo': 'q3', 'letter': 'l', 'elements': ['L']}]
+    listNodes= [{'initialNode': True, 'finalNode': False, 'nombreNodo': 'q0', 'letter': 'a', 'elements': ['q0']}, {'initialNode': False, 'finalNode': False, 'nombreNodo': 'q1', 'letter': 'a', 'elements': ['L']}, {'initialNode': False, 'finalNode': False, 'nombreNodo': 'q2', 'letter': 'a', 'elements': ['q1']}, {'initialNode': False, 'finalNode': True, 'nombreNodo': 'q3', 'letter': 'a', 'elements': ['L']}, {'initialNode': True, 'finalNode': False, 'nombreNodo': 'q0', 'letter': 'b', 'elements': ['L']}, {'initialNode': False, 'finalNode': False, 'nombreNodo': 'q1', 'letter': 'b', 'elements': ['q2']}, {'initialNode': False, 'finalNode': False, 'nombreNodo': 'q2', 'letter': 'b', 'elements': ['L']}, {'initialNode': False, 'finalNode': True, 'nombreNodo': 'q3', 'letter': 'b', 'elements': ['q3']}, {'initialNode': True, 'finalNode': False, 'nombreNodo': 'q0', 'letter': 'l', 'elements': ['q1']}, {'initialNode': False, 'finalNode': False, 'nombreNodo': 'q1', 'letter': 'l', 'elements': ['q3']}, {'initialNode': False, 'finalNode': False, 'nombreNodo': 'q2', 'letter': 'l', 'elements': ['L']}, {'initialNode': False, 'finalNode': True, 'nombreNodo': 'q3', 'letter': 'l', 'elements': ['L']}]
     firstNodes = getFirstNodes(listNodes)
     finalNodes =  getFinalNodes(listNodes)
     dnfaList = []
     dnfaList.append(firstNodes)
     lambdaNodes = getNodesToLambdaGeneral(firstNodes, listNodes)
     secondRow=[]
-    getLettersNodes(lambdaNodes,listNodes,"b",secondRow)
+    getLettersNodes(lambdaNodes,listNodes,"a",secondRow)
 
 
 
