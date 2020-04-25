@@ -43,36 +43,17 @@ def getLambdaNodes(node, listNodes,resultNodes):
         return(getLambdaNodes(newNode, listNodes,resultNodes))
         
 
-def findLetterRecursion(node,listNodes,letter):
-    if("L" != node["elements"][0]):
-        print("finalRecursion",node)
-        return
-    else:
-        for checkNode in listNodes:
-            if(node["elements"][0] == checkNode["nombreNodo"] or checkNode["nombreNodo"] == "l"):
-                newNode: checkNode
-            return findLetterRecursion(newNode, listNodes, letter)
 
-def getLambdasLettersNodes(node, listNodes, letter):
-    for checkNode in listNodes:
-        if (node["elements"][0] == checkNode["nombreNodo"] and checkNode["letter"] == letter):
-            print("final",checkNode)
-        if (node["elements"][0] == checkNode["nombreNodo"] and checkNode["letter"] == "l"):
-            getLambdasLettersNodes(checkNode, listNodes, letter)
 
 def getLettersNodes(lambdaNodes, listNodes,letter,secondRow):
     for lambdaNode in lambdaNodes:
-        print("nodo")
-        for checkNode in lambdaNode:
-            print("checa", checkNode)
-            for listNode in listNodes:
-                if(checkNode["nombreNodo"] == listNode["nombreNodo"] and listNode["letter"] == letter and "L" not in listNode["elements"] ):
-                    print("final",listNode)
-                if(checkNode["nombreNodo"] == listNode["nombreNodo"] and listNode["letter"] == "l" ):
-                    print("buscar",listNode)
-                    getLambdasLettersNodes(listNode, listNodes,letter)
+        for nodeInfo in lambdaNode:
+            for checkNode in listNodes:
+                if((nodeInfo["elements"][0] == checkNode["nombreNodo"] or nodeInfo["nombreNodo"] == checkNode["nombreNodo"]) and checkNode["letter"] == letter):
+                    if(checkNode["elements"][0] != "L"):
+                        secondRow.append(checkNode)
 
-        print()
+
 
 def  lambdaNdfaToNdfa():
     language = ["a","b","l"]
@@ -83,9 +64,17 @@ def  lambdaNdfaToNdfa():
     dnfaList.append(firstNodes)
     lambdaNodes = getNodesToLambdaGeneral(firstNodes, listNodes)
     secondRow=[]
-    getLettersNodes(lambdaNodes,listNodes,"a",secondRow)
+    getLettersNodes(lambdaNodes,listNodes,"b",secondRow)
 
-
+    print("resultado")
+    print("tablaUno")
+    for lambdaRow in lambdaNodes:
+        for node in lambdaRow:
+            print(node)
+        print("cambio")
+    print("tablaDos")
+    for letterRow in secondRow:
+        print(letterRow)
 
 
 
