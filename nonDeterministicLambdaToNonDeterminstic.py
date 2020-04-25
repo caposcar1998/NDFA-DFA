@@ -15,29 +15,63 @@ def getFinalNodes(listNodes):
             finalNodes.append(node)
     return finalNodes
 
-
-def getNodesToLambdaWithA(firstNodes, listNodes):
-
+def getNodesToLambdaGeneral(firstNodes, listNodes):
+    
+    tableNodes = []
+    lamndaNodes= []
     for node in listNodes:
         if (node['letter'] == "l" ):
-            listaCrear = [] 
-            print(node)
-            getNext( node,"b",listNodes, listaCrear)
-            print(listaCrear)
-            print("cambio")
+            lamndaNodes.append(node)
+    
+    for lambdaNode in lamndaNodes:
+        resultNodes=[]
+        resultNodes.append(lambdaNode)
+        getLambdaNodes( lambdaNode,lamndaNodes,resultNodes)
+        tableNodes.append(resultNodes)
 
+    return tableNodes
+            
+def getLambdaNodes(node, listNodes,resultNodes):
 
-
-
-def getNext(node, letter, listNodes, listaCrear):
-    if("L" in node['elements']     ) :
-        listaCrear.append(node)
-        return 
+    if("L" in node['elements'] ):
+        resultNodes.append(node)
+        return
     else:
-        for node in listNodes:
-            if (node['letter'] == "l"):
-                newNode = node
-    return getNext(newNode, letter, listNodes, listaCrear)
+        for newNode in listNodes:
+            if(newNode["nombreNodo"] in node['elements']):
+                resultNodes.append(newNode)
+        return(getLambdaNodes(newNode, listNodes,resultNodes))
+        
+
+def findLetterRecursion(node,listNodes,letter):
+    if("L" != node["elements"][0]):
+        print("finalRecursion",node)
+        return
+    else:
+        for checkNode in listNodes:
+            if(node["elements"][0] == checkNode["nombreNodo"] or checkNode["nombreNodo"] == "l"):
+                newNode: checkNode
+            return findLetterRecursion(newNode, listNodes, letter)
+
+def getLambdasLettersNodes(node, listNodes, letter):
+    for checkNode in listNodes:
+        if (node["elements"][0] == checkNode["nombreNodo"] and checkNode["letter"] == letter):
+            print("final",checkNode)
+        if (node["elements"][0] == checkNode["nombreNodo"] and checkNode["letter"] == "l"):
+            getLambdasLettersNodes(checkNode,listNodes,letter)
+
+def getLettersNodes(lambdaNodes, listNodes,letter,secondRow):
+    for lambdaNode in lambdaNodes:
+        for checkNode in lambdaNode:
+            print("checa", checkNode)
+            for listNode in listNodes:
+                if(checkNode["nombreNodo"] == listNode["nombreNodo"] and listNode["letter"] == letter and "L" not in listNode["elements"] ):
+                    print("final",listNode)
+                if(checkNode["nombreNodo"] == listNode["nombreNodo"] and listNode["letter"] == "l" ):
+                    print("buscar",listNode)
+                    getLambdasLettersNodes(listNode, listNodes, letter)
+                    
+        print()
 
 def  lambdaNdfaToNdfa():
     language = ["a","b","l"]
@@ -46,5 +80,11 @@ def  lambdaNdfaToNdfa():
     finalNodes =  getFinalNodes(listNodes)
     dnfaList = []
     dnfaList.append(firstNodes)
-    getNodesToLambdaWithA(firstNodes, listNodes)
-   
+    lambdaNodes = getNodesToLambdaGeneral(firstNodes, listNodes)
+    secondRow=[]
+    getLettersNodes(lambdaNodes,listNodes,"b",secondRow)
+
+
+
+
+
