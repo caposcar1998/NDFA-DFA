@@ -42,9 +42,6 @@ def getLambdaNodes(node, listNodes,resultNodes):
                 resultNodes.append(newNode)
         return(getLambdaNodes(newNode, listNodes,resultNodes))
         
-
-
-
 def getLettersNodes(lambdaNodes, listNodes,letter,secondRow):
     for lambdaNode in lambdaNodes:
         for nodeInfo in lambdaNode:
@@ -53,6 +50,30 @@ def getLettersNodes(lambdaNodes, listNodes,letter,secondRow):
                     if(checkNode["elements"][0] != "L"):
                         secondRow.append(checkNode)
 
+
+
+def getLastLambdaNodes(secondRow, listNodes, thirdRow, letter):
+    lambaNodes =[]
+    resultNodes=[]
+    for letterRow in secondRow:
+        print("comparar",letterRow["elements"])
+        for checkNode in listNodes:
+            if (letterRow["elements"][0] ==  checkNode["nombreNodo"]):
+                if (checkNode["elements"][0] != "L" and checkNode["letter"] == letter):
+                    print(checkNode)
+                if (checkNode["letter"] == "l"): 
+                    thirdRowRecursion(checkNode, listNodes,resultNodes)
+
+
+def thirdRowRecursion(node, listNodes, resultNodes):
+    if ("L" in node["elements"] ):
+        print(node)
+        return
+    else:
+        for checkNode in listNodes:
+            if (checkNode["nombreNodo"] in node['elements']):
+                print(checkNode)
+        return(thirdRowRecursion(checkNode, listNodes, resultNodes))
 
 
 def  lambdaNdfaToNdfa():
@@ -64,8 +85,11 @@ def  lambdaNdfaToNdfa():
     dnfaList.append(firstNodes)
     lambdaNodes = getNodesToLambdaGeneral(firstNodes, listNodes)
     secondRow=[]
-    getLettersNodes(lambdaNodes,listNodes,"b",secondRow)
+    getLettersNodes(lambdaNodes,listNodes,"a",secondRow)
+    thirdRow=[]
+    getLastLambdaNodes(secondRow, listNodes, thirdRow, "a")
 
+    """
     print("resultado")
     print("tablaUno")
     for lambdaRow in lambdaNodes:
@@ -74,7 +98,8 @@ def  lambdaNdfaToNdfa():
         print("cambio")
     print("tablaDos")
     for letterRow in secondRow:
-        print(letterRow)
-
-
-
+        print(letterRow["elements"])
+    print("tablaTres")
+    for lambdaRow in thirdRow:
+        print(lambdaRow)
+    """
