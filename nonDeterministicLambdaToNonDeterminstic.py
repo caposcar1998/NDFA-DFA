@@ -44,11 +44,13 @@ def getLambdaNodes(node, listNodes,resultNodes):
         
 def getLettersNodes(lambdaNodes, listNodes,letter,secondRow):
     for lambdaNode in lambdaNodes:
+        letterList = []
         for nodeInfo in lambdaNode:
             for checkNode in listNodes:
                 if((nodeInfo["elements"][0] == checkNode["nombreNodo"] or nodeInfo["nombreNodo"] == checkNode["nombreNodo"]) and checkNode["letter"] == letter):
                     if(checkNode["elements"][0] != "L"):
-                        secondRow.append(checkNode)
+                        letterList.append(checkNode)
+        secondRow.append(letterList)
 
 
 
@@ -56,23 +58,25 @@ def getLastLambdaNodes(secondRow, listNodes, thirdRow, letter):
     lambaNodes =[]
     resultNodes=[]
     for letterRow in secondRow:
-        print("comparar",letterRow["elements"])
-        for checkNode in listNodes:
-            if (letterRow["elements"][0] ==  checkNode["nombreNodo"]):
-                if (checkNode["elements"][0] != "L" and checkNode["letter"] == letter):
-                    print(checkNode)
-                if (checkNode["letter"] == "l"): 
-                    thirdRowRecursion(checkNode, listNodes,resultNodes)
+        print()
+        print(letterRow)
+        for value in letterRow:
+            for checkNode in listNodes:
+                if (value["elements"][0] ==  checkNode["nombreNodo"]):
+                    if (checkNode["elements"][0] != "L" and checkNode["letter"] == letter):
+                        print(checkNode['nombreNodo'])
+                    if (checkNode["letter"] == "l"): 
+                        thirdRowRecursion(checkNode, listNodes,resultNodes)
 
 
 def thirdRowRecursion(node, listNodes, resultNodes):
     if ("L" in node["elements"] ):
-        print(node)
+        print(node['nombreNodo'])
         return
     else:
         for checkNode in listNodes:
             if (checkNode["nombreNodo"] in node['elements']):
-                print(checkNode)
+                print(checkNode['nombreNodo'])
         return(thirdRowRecursion(checkNode, listNodes, resultNodes))
 
 
